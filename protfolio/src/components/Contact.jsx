@@ -13,9 +13,51 @@ const MailIcon = () => (
   </svg>
 );
 
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current stroke-2.5 shrink-0 stroke-linecap-round stroke-linejoin-round text-emerald-700">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const CopyIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current stroke-2 shrink-0 stroke-linecap-round stroke-linejoin-round opacity-60 group-hover:opacity-100 transition-opacity">
+    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+  </svg>
+);
+
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [copiedType, setCopiedType] = useState(null); // 'email' | 'phone' | null
+
+  const copyToClipboard = (text, type) => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text);
+    } else {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+    }
+
+    setCopiedType(type);
+    setTimeout(() => {
+      setCopiedType(null);
+    }, 2500);
+  };
+
+  const handleCopyEmail = (e) => {
+    e.preventDefault();
+    copyToClipboard('eyerusalem.tsegaye.38@gmail.com', 'email');
+  };
+
+  const handleCopyPhone = (e) => {
+    e.preventDefault();
+    copyToClipboard('+251904137138', 'phone');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,34 +82,79 @@ export default function Contact() {
   return (
     <div className="w-full max-w-2xl px-2 md:px-6 py-1 normal-case tracking-normal transition-all duration-500">
       
-      {/* Contact Information Bar (Email, Phone) */}
+      {/* Contact Information Cards with Copy on Click */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
-        <a
-          href="mailto:eyerusalem.tsegaye.38@gmail.com"
-          className="flex items-center gap-3 bg-[#ebdcd0] hover:bg-[#e4d3c5] p-3.5 rounded-2xl border border-[#61263d]/15 text-[#61263d] transition-all duration-300 shadow-sm group"
+        
+        {/* Email Copy Card */}
+        <button
+          type="button"
+          onClick={handleCopyEmail}
+          title="Click to copy email address"
+          className="flex items-center justify-between gap-3 bg-[#ebdcd0] hover:bg-[#e4d3c5] p-3.5 rounded-2xl border border-[#61263d]/15 text-[#61263d] transition-all duration-300 shadow-sm group text-left w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#61263d]/40"
         >
-          <div className="w-9 h-9 rounded-xl bg-[#61263d]/10 group-hover:bg-[#61263d] group-hover:text-[#f5f0e6] flex items-center justify-center transition-colors">
-            <MailIcon />
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="w-9 h-9 rounded-xl bg-[#61263d]/10 group-hover:bg-[#61263d] group-hover:text-[#f5f0e6] flex items-center justify-center shrink-0 transition-colors">
+              <MailIcon />
+            </div>
+            <div className="overflow-hidden">
+              <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#61263d]/70">
+                <span>Email</span>
+                {copiedType === 'email' && (
+                  <span className="text-emerald-700 font-extrabold flex items-center gap-0.5 animate-pulse">
+                    • Copied! <CheckIcon />
+                  </span>
+                )}
+              </div>
+              <div className="text-xs md:text-sm font-semibold truncate text-[#2b2024]">
+                eyerusalem.tsegaye.38@gmail.com
+              </div>
+            </div>
           </div>
-          <div className="overflow-hidden">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-[#61263d]/70">Email</div>
-            <div className="text-xs md:text-sm font-semibold truncate text-[#2b2024]">eyerusalem.tsegaye.38@gmail.com</div>
+          <div className="shrink-0 text-[#61263d]">
+            {copiedType === 'email' ? <CheckIcon /> : <CopyIcon />}
           </div>
-        </a>
+        </button>
 
-        <a
-          href="tel:+251904137138"
-          className="flex items-center gap-3 bg-[#ebdcd0] hover:bg-[#e4d3c5] p-3.5 rounded-2xl border border-[#61263d]/15 text-[#61263d] transition-all duration-300 shadow-sm group"
+        {/* Phone Copy Card */}
+        <button
+          type="button"
+          onClick={handleCopyPhone}
+          title="Click to copy phone number"
+          className="flex items-center justify-between gap-3 bg-[#ebdcd0] hover:bg-[#e4d3c5] p-3.5 rounded-2xl border border-[#61263d]/15 text-[#61263d] transition-all duration-300 shadow-sm group text-left w-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#61263d]/40"
         >
-          <div className="w-9 h-9 rounded-xl bg-[#61263d]/10 group-hover:bg-[#61263d] group-hover:text-[#f5f0e6] flex items-center justify-center transition-colors">
-            <PhoneIcon />
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="w-9 h-9 rounded-xl bg-[#61263d]/10 group-hover:bg-[#61263d] group-hover:text-[#f5f0e6] flex items-center justify-center shrink-0 transition-colors">
+              <PhoneIcon />
+            </div>
+            <div className="overflow-hidden">
+              <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#61263d]/70">
+                <span>Phone</span>
+                {copiedType === 'phone' && (
+                  <span className="text-emerald-700 font-extrabold flex items-center gap-0.5 animate-pulse">
+                    • Copied! <CheckIcon />
+                  </span>
+                )}
+              </div>
+              <div className="text-xs md:text-sm font-semibold truncate text-[#2b2024]">
+                +251 904 137 138
+              </div>
+            </div>
           </div>
-          <div className="overflow-hidden">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-[#61263d]/70">Phone</div>
-            <div className="text-xs md:text-sm font-semibold truncate text-[#2b2024]">+251 904 137 138</div>
+          <div className="shrink-0 text-[#61263d]">
+            {copiedType === 'phone' ? <CheckIcon /> : <CopyIcon />}
           </div>
-        </a>
+        </button>
       </div>
+
+      {/* Copied Toast Banner */}
+      {copiedType && (
+        <div className="mb-4 p-2.5 bg-emerald-800 text-[#f5f0e6] text-xs font-semibold rounded-xl text-center shadow-md animate-fade-in flex items-center justify-center gap-2">
+          <CheckIcon />
+          <span>
+            {copiedType === 'email' ? 'Email address' : 'Phone number'} copied to clipboard!
+          </span>
+        </div>
+      )}
 
       {/* Success Notification Banner */}
       {submitted && (
@@ -111,7 +198,7 @@ export default function Contact() {
 
         <button
           type="submit"
-          className="w-full py-3.5 bg-[#61263d] text-[#f5f0e6] font-bold rounded-xl shadow-md hover:bg-[#4a1c2e] active:scale-[0.99] transition-all uppercase tracking-widest text-xs md:text-sm flex items-center justify-center gap-2"
+          className="w-full py-3.5 bg-[#61263d] text-[#f5f0e6] font-bold rounded-xl shadow-md hover:bg-[#4a1c2e] active:scale-[0.99] transition-all uppercase tracking-widest text-xs md:text-sm flex items-center justify-center gap-2 cursor-pointer"
         >
           <MailIcon />
           Send Message
