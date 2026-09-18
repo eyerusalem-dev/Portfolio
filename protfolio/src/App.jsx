@@ -137,7 +137,7 @@ function App() {
                     <p className="text-[#4a3a3f] text-xs sm:text-sm">I specialize in Python, Django, React, JavaScript, Next.js, and Machine Learning tools.</p>
                   </div>
                   <div className="bg-[#ebdcd0] p-4 sm:p-5 rounded-2xl w-full border border-[#61263d]/10">
-                    <h4 className="font-bold text-[#61263d] text-sm sm:text-base mb-1">Are you available for full-time roles or freelance?</h4>
+                    <h4 className="font-bold text-[#61263d] text-sm sm:text-base mb-1">Are you available for full-time roles or ?</h4>
                     <p className="text-[#4a3a3f] text-xs sm:text-sm">Yes, I am open to full-time developing roles, research collaborations, and freelance projects.</p>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ function App() {
             <div className="flex flex-col items-center mt-6 sm:mt-10 relative z-50">
               <div className="flex gap-6 sm:gap-8 justify-center mb-2 sm:mb-3 text-[#61263d]">
                 <SocialIcon type="github" size={24} href="https://github.com/eyerusalem-dev" />
-                <SocialIcon type="linkedin" size={24} href="https://linkedin.com/in/yourusername" />
+                <SocialIcon type="linkedin" size={24} href="https://www.linkedin.com/in/eyerusalem-tsegaye-prf" />
                 <SocialIcon type="telegram" size={24} href="https://t.me/jerry_388" />
               </div>
               <div className="text-[10px] sm:text-[11px] text-[#61263d] font-bold tracking-widest">
